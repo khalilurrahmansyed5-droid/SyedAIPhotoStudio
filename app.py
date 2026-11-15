@@ -10,7 +10,15 @@ def home():
 
 @app.route("/remove-bg", methods=["POST"])
 def remove_bg():
+
+    if "image" not in request.files:
+        return "Image not found", 400
+
     file = request.files["image"]
+
+    if file.filename == "":
+        return "No image selected", 400
+
     output = remove(file.read())
 
     return send_file(
@@ -20,4 +28,4 @@ def remove_bg():
     )
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
